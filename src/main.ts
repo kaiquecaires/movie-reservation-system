@@ -13,7 +13,7 @@ async function bootstrap() {
   }))
 
   await app.listen({
-    port: 3000
+    port: Number(process.env.APP_PORT)
   });
 }
 bootstrap();
