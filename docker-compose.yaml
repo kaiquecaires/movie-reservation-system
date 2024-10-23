@@ -1,17 +1,4 @@
 services:
-  movie_reservation:
-    container_name: movie_reservation
-    image: node:latest
-    working_dir: /usr/src/app
-    ports:
-      - '${APP_PORT}:${APP_PORT}'
-    command: npm run start:dev
-    env_file: .env
-    volumes:
-      - .:/usr/src/app
-    depends_on:
-      - postgres
-
   postgres:
     image: postgres:latest
     container_name: movie_reservation_postgres
