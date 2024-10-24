@@ -1,26 +1,27 @@
-import { plainToInstance } from "class-transformer";
 import { SignUpBodyDTO } from "../dto/body/sign-up.dto";
-import { SignUpResponseDTO } from "../dto/responses/sign-up-response.dto";
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "src/infra/postgresql/repositories/users.repository";
 import { BcryptService } from "./bcrypt.service";
+import { AuthResponseDTO } from "../dto/responses/auth.dto";
+import { JwtService } from "./jwt.service";
 
 @Injectable()
 export class SignUpService {
   constructor(
     private readonly usersRepository: UsersRepository,
-    private readonly bcryptService: BcryptService
+    private readonly bcryptService: BcryptService,
+    private readonly jwtService: JwtService
   ) {}
 
-  async execute({ name, email, password }: SignUpBodyDTO): Promise<SignUpResponseDTO> {
+  async execute({ name, email, password }: SignUpBodyDTO): Promise<AuthResponseDTO> {
     const hashedPassword = await this.bcryptService.hashPassword(password)
-    const user = this.usersRepository.create({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: hashedPassword
     })
-    return plainToInstance(SignUpResponseDTO, user, {
-      excludeExtraneousValues: true
-    })
+    return {
+      token: this.jwtService.generateToken(user.id)
+    }
   }
 }
