@@ -10,4 +10,13 @@ export class UsersRepository {
     const user = await this.prisma.user.create({ data })
     return user
   }
+
+  async getByEmail(email: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email
+      }
+    })
+    return user
+  }
 }
