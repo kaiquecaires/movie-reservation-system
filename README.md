@@ -14,3 +14,4 @@ npm run start:dev
 
 ## Features
 - Sign Up
+- Login
