@@ -29,3 +29,40 @@ model User {
 
   @@map("users")
 }
+
+model Movie {
+  id          Int           @id @default(autoincrement())
+  title       String        @db.VarChar(255)
+  description String        @db.Text
+  posterImage String        @db.Text
+  genders     Gender[]      @relation("MovieGender")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  MovieGender MovieGender[]
+
+  @@map("movies")
+}
+
+model Gender {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  movies      Movie[]       @relation("MovieGender")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  MovieGender MovieGender[]
+
+  @@map("genders")
+}
+
+model MovieGender {
+  id        Int      @id @default(autoincrement())
+  movieId   Int
+  genderId  Int
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  gender    Gender   @relation(fields: [genderId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([movieId, genderId])
+  @@map("movie_genders")
+}
