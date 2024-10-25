@@ -6,8 +6,8 @@ export class JwtService {
   private readonly secret = process.env.JWT_SECRET
   private readonly expiration = process.env.EXPIRATION_TIME
 
-  generateToken(userId: number): string {
-    return jwt.sign({ userId }, this.secret, { expiresIn: this.expiration })
+  generateToken(userId: number, role: string): string {
+    return jwt.sign({ userId, role }, this.secret, { expiresIn: this.expiration })
   }
 
   verifyToken(token: string): any {

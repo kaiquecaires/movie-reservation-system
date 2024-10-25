@@ -26,7 +26,7 @@ export class LoginService {
     }
 
     return {
-      token: this.jwtService.generateToken(user.id)
+      token: this.jwtService.generateToken(user.id, user.role)
     }
   }
 }

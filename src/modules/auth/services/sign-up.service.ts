@@ -21,7 +21,7 @@ export class SignUpService {
       password: hashedPassword
     })
     return {
-      token: this.jwtService.generateToken(user.id)
+      token: this.jwtService.generateToken(user.id, user.role)
     }
   }
 }
