@@ -1,6 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, MinLength, MaxLength, IsArray, IsNumber } from 'class-validator'
 
+type Gender = {
+  id: number
+}
+
 export class CreateMovieDTO {
   @ApiProperty({ example: 'movie name', required: true })
   @IsString()
@@ -16,6 +20,9 @@ export class CreateMovieDTO {
 
   @ApiProperty({ example: 'movie name', required: true })
   @IsArray()
-  @IsNumber({}, { each: true })
-  genders: number[]
+  genders: Gender[]
+
+  @ApiProperty({ example: 'poster image url', required: true })
+  @IsString()
+  posterImage: string
 }
