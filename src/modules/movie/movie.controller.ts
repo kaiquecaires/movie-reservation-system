@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post, Res, UseGuards } from "@nestjs/common";
-import { ApiCreatedResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateMovieDTO } from "./dto/body/create-movie.dto";
 import { FastifyReply } from "fastify";
 import { CreateMovieService } from "./services/create-movie.service";
@@ -24,6 +24,7 @@ export class MovieController {
     description: 'Result of this route',
     type: MovieDTO
   })
+  @ApiBearerAuth()
   @Post('/')
   @UseGuards(AuthGuard('jwt'))
   async create(@Body() body: CreateMovieDTO, @Res() res: FastifyReply) {
