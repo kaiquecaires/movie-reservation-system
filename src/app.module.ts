@@ -4,12 +4,14 @@ import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config'
 import { MovieModule } from './modules/movie/movie.module';
+import { SecurityModule } from './security/security.module';
 
 @Module({
   imports: [
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    MovieModule
+    MovieModule,
+    SecurityModule
   ],
   controllers: [AppController],
   providers: [AppService],
