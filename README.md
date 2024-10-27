@@ -12,6 +12,9 @@ docker-compose up -d
 npm run start:dev
 ```
 
+## Swagger
+You can access the swagger docs by accessing the /docs route.
+
 ## Features
 - Sign Up
 - Login
