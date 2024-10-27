@@ -15,3 +15,5 @@ npm run start:dev
 ## Features
 - Sign Up
 - Login
+- Create movie
+- Auth middleware
