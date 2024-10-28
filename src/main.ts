@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import multipart from 'fastify-multipart'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
@@ -21,6 +22,8 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     transform: true
   }))
+
+  app.register(multipart as any)
 
   await app.listen({
     port: Number(process.env.APP_PORT)
