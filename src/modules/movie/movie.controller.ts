@@ -1,10 +1,11 @@
-import { Body, Controller, HttpCode, Post, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateMovieDTO } from "./dto/body/create-movie.dto";
-import { FastifyReply } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateMovieService } from "./services/create-movie.service";
 import { MovieDTO } from "./dto/responses/movie.dto";
 import { AuthGuard } from "@nestjs/passport";
+import { FastifyFileInterceptor } from "src/interceptors/fastify-file.interceptor";
 
 @ApiTags('Movies | V1')
 @Controller({
@@ -32,4 +33,10 @@ export class MovieController {
     return res.status(201).send(result)
   }
 
+  @Post('/poster-image')
+  @UseInterceptors(new FastifyFileInterceptor('file', './uploads'))
+  async uploadPosterImage(@Req() request: FastifyRequest) {
+    const filePath = (request as any).filePath;
+    return { path: filePath }
+  }
 }
