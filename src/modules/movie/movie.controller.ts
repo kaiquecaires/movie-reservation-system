@@ -6,6 +6,7 @@ import { CreateMovieService } from "./services/create-movie.service";
 import { MovieDTO } from "./dto/responses/movie.dto";
 import { AuthGuard } from "@nestjs/passport";
 import { FastifyFileInterceptor } from "src/interceptors/fastify-file.interceptor";
+import { UpdloadPosterImageDTO } from "./dto/responses/upload-poster-image.dto";
 
 @ApiTags('Movies | V1')
 @Controller({
@@ -33,8 +34,18 @@ export class MovieController {
     return res.status(201).send(result)
   }
 
+  @HttpCode(200)
+  @ApiOperation({
+    summary: 'Route to upload a poster image'
+  })
+  @ApiCreatedResponse({
+    description: 'Result of this route',
+    type: UpdloadPosterImageDTO
+  })
+  @ApiBearerAuth()
   @Post('/poster-image')
   @UseInterceptors(new FastifyFileInterceptor('file', './uploads'))
+  @UseGuards(AuthGuard('jwt'))
   async uploadPosterImage(@Req() request: FastifyRequest) {
     const filePath = (request as any).filePath;
     return { path: filePath }
