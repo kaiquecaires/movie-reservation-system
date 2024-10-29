@@ -10,4 +10,8 @@ export class MoviesRepository {
     const movie = await this.prisma.movie.create(data)
     return movie.id
   }
+
+  async update(data: Prisma.MovieUpdateArgs) {
+    await this.prisma.movie.update(data)
+  }
 }
