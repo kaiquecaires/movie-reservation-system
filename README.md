@@ -20,3 +20,5 @@ You can access the swagger docs by accessing the /docs route.
 - Login
 - Create movie
 - Auth middleware
+- Upload poster image
+- Update Movie
