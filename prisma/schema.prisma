@@ -19,13 +19,15 @@ enum UserRole {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  email     String   @unique
-  role      UserRole @default(user)
-  password  String   @db.VarChar(60)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  email       String        @unique
+  role        UserRole      @default(user)
+  password    String        @db.VarChar(60)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Reservation Reservation[]
+  Checkout    Checkout[]
 
   @@map("users")
 }
@@ -39,6 +41,8 @@ model Movie {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   MovieGender MovieGender[]
+  ShowTime    ShowTime[]
+  deletedAt   DateTime?
 
   @@map("movies")
 }
@@ -65,4 +69,95 @@ model MovieGender {
 
   @@unique([movieId, genderId])
   @@map("movie_genders")
+}
+
+model Room {
+  id          Int        @id @default(autoincrement())
+  name        String     @db.VarChar(50)
+  isAvailable Boolean
+  seats       Seat[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  ShowTime    ShowTime[]
+
+  @@map("rooms")
+}
+
+enum SeatType {
+  REGULAR
+  VIP
+}
+
+model Seat {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(5)
+  isAvailable Boolean
+  seatType    SeatType
+  roomId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  room        Room          @relation(fields: [roomId], references: [id])
+  Reservation Reservation[]
+
+  @@map("seats")
+}
+
+model ShowTime {
+  id           Int      @id @default(autoincrement())
+  roomId       Int
+  movieId      Int
+  priceRegular Decimal  @db.Decimal(10, 2)
+  priceVIP     Decimal  @db.Decimal(10, 2)
+  isActive     Boolean
+  startTime    DateTime
+  endTime      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  movie       Movie         @relation(fields: [movieId], references: [id])
+  room        Room          @relation(fields: [roomId], references: [id])
+  Reservation Reservation[]
+
+  @@index([startTime])
+  @@map("show_times")
+}
+
+enum CheckoutStatus {
+  PENDING
+  COMPLETED
+  CANCELED
+}
+
+model Checkout {
+  id         Int            @id @default(autoincrement())
+  userId     Int
+  totalPrice Decimal        @db.Decimal(10, 2)
+  status     CheckoutStatus
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  canceledAt DateTime?
+
+  user        User          @relation(fields: [userId], references: [id])
+  Reservation Reservation[]
+
+  @@map("checkouts")
+}
+
+model Reservation {
+  id         Int      @id @default(autoincrement())
+  seatId     Int
+  showTimeId Int
+  checkoutId Int
+  userId     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  seat     Seat     @relation(fields: [seatId], references: [id])
+  showTime ShowTime @relation(fields: [showTimeId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  checkout Checkout @relation(fields: [checkoutId], references: [id])
+
+  @@unique([seatId, showTimeId])
+  @@map("reservations")
 }
