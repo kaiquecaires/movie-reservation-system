@@ -80,6 +80,7 @@ model Room {
   updatedAt   DateTime   @updatedAt
   ShowTime    ShowTime[]
 
+  @@unique([name])
   @@map("rooms")
 }
 
