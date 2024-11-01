@@ -5,6 +5,7 @@ import { MovieModule } from './modules/movie/movie.module';
 import { SecurityModule } from './security/security.module';
 import { RoomModule } from './modules/room/room.module';
 import { SeatsModule } from './modules/seats/seats.module';
+import { ShowTimesModule } from './modules/show-time/show-times.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { SeatsModule } from './modules/seats/seats.module';
     MovieModule,
     SecurityModule,
     RoomModule,
-    SeatsModule
+    SeatsModule,
+    ShowTimesModule
   ],
 })
 export class AppModule {}
