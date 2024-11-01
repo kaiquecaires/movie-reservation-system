@@ -23,3 +23,5 @@ You can access the swagger docs by accessing the /docs route.
 - Upload poster image
 - Update Movie
 - Create Room
+- Create Seats
+- Create Show Time
