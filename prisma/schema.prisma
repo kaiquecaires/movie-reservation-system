@@ -19,15 +19,14 @@ enum UserRole {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  name        String        @db.VarChar(255)
-  email       String        @unique
-  role        UserRole      @default(user)
-  password    String        @db.VarChar(60)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Reservation Reservation[]
-  Checkout    Checkout[]
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(255)
+  email     String     @unique
+  role      UserRole   @default(user)
+  password  String     @db.VarChar(60)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Checkout  Checkout[]
 
   @@map("users")
 }
@@ -134,7 +133,7 @@ model Checkout {
   id         Int            @id @default(autoincrement())
   userId     Int
   totalPrice Decimal        @db.Decimal(10, 2)
-  status     CheckoutStatus
+  status     CheckoutStatus @default(PENDING)
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
   canceledAt DateTime?
@@ -150,13 +149,11 @@ model Reservation {
   seatId     Int
   showTimeId Int
   checkoutId Int
-  userId     Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
   seat     Seat     @relation(fields: [seatId], references: [id])
   showTime ShowTime @relation(fields: [showTimeId], references: [id])
-  user     User     @relation(fields: [userId], references: [id])
   checkout Checkout @relation(fields: [checkoutId], references: [id])
 
   @@unique([seatId, showTimeId])
