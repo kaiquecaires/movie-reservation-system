@@ -5,6 +5,7 @@ import { MoviesRepository } from "./repositories/movies.repository";
 import { RoomsRepository } from "./repositories/rooms.repository";
 import { SeatsRepository } from "./repositories/seats.repository";
 import { ShowTimesRepository } from "./repositories/show-times.repository";
+import { CheckoutRepository } from "./repositories/checkout-repository";
 
 @Module({
   providers: [
@@ -13,7 +14,8 @@ import { ShowTimesRepository } from "./repositories/show-times.repository";
     MoviesRepository,
     RoomsRepository,
     SeatsRepository,
-    ShowTimesRepository
+    ShowTimesRepository,
+    CheckoutRepository
   ],
   exports: [
     PrismaService,
@@ -21,7 +23,8 @@ import { ShowTimesRepository } from "./repositories/show-times.repository";
     MoviesRepository,
     RoomsRepository,
     SeatsRepository,
-    ShowTimesRepository
+    ShowTimesRepository,
+    CheckoutRepository
   ]
 })
 export class PrismaModule {}
