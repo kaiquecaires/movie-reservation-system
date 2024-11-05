@@ -6,6 +6,7 @@ import { SecurityModule } from './security/security.module';
 import { RoomModule } from './modules/room/room.module';
 import { SeatsModule } from './modules/seats/seats.module';
 import { ShowTimesModule } from './modules/show-time/show-times.module';
+import { CheckoutModule } from './modules/checkout/checkout.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ShowTimesModule } from './modules/show-time/show-times.module';
     SecurityModule,
     RoomModule,
     SeatsModule,
-    ShowTimesModule
+    ShowTimesModule,
+    CheckoutModule
   ],
 })
 export class AppModule {}
