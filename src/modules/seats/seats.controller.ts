@@ -26,7 +26,7 @@ export class SeatsController {
   })
   @ApiBearerAuth()
   @Post('/create-many')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('admin'))
   async createMany(@Body() body: CreateSeatsDTO, @Res() res: FastifyReply) {
     const result = await this.createSeatsService.execute(body)
     return res.status(201).send(result)

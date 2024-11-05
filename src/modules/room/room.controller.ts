@@ -24,7 +24,7 @@ export class RoomController {
   })
   @ApiBearerAuth()
   @Post('/')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('admin'))
   async create(@Body() body: CreateRoomDTO, @Res() res: FastifyReply) {
     const result = await this.createRoomService.execute(body)
     return res.status(201).send(result)

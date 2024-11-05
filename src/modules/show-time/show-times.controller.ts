@@ -26,7 +26,7 @@ export class ShowTimesController {
   })
   @ApiBearerAuth()
   @Post('/')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('admin'))
   async create(@Body() body: CreateShowTimeDTO, @Res() res: FastifyReply) {
     const result = await this.createShowTimesService.execute(body)
     return res.status(201).send(result)

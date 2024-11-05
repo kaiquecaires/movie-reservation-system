@@ -31,7 +31,7 @@ export class MovieController {
   })
   @ApiBearerAuth()
   @Post('/')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('admin'))
   async create(@Body() body: CreateMovieDTO, @Res() res: FastifyReply) {
     const result = await this.createMovieService.execute(body)
     return res.status(201).send(result)
@@ -48,7 +48,7 @@ export class MovieController {
   @ApiBearerAuth()
   @Post('/poster-image')
   @UseInterceptors(new FastifyFileInterceptor('file', './uploads'))
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('admin'))
   async uploadPosterImage(@Req() request: FastifyRequest) {
     const filePath = (request as any).filePath;
     return { path: filePath }
@@ -59,7 +59,7 @@ export class MovieController {
     summary: 'Route to update movie'
   })
   @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('admin'))
   @ApiNoContentResponse()
   @Put('/:id')
   async updateMovie(
