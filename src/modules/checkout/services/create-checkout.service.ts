@@ -10,14 +10,14 @@ export class CreateCheckoutService {
     private readonly showTimesRepository: ShowTimesRepository
   ) {}
 
-  async execute(data: CheckoutDTO) {
+  async execute(userId: number, data: CheckoutDTO) {
     const totalPrice = await this.showTimesRepository.getTotalPrice(
       data.showTimeId,
       data.reservations.map(reservation => reservation.seatId)
     )
     const response = await this.checkoutRepository.create({
       data: {
-        userId: data.userId,
+        userId,
         totalPrice: totalPrice.total
       }
     }, data.reservations.map(reservation => {
