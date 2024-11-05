@@ -22,7 +22,7 @@ export class ShowTimesRepository {
     ) AS total
     FROM seats s
     INNER JOIN show_times st ON st."roomId" = s."roomId" AND st.id = ${showTimeId}
-    WHERE s.id IN (${seatIdsList});
+    WHERE s.id = ANY(${seatIdsList}::integer[]);
     `
     return response[0]
   }
