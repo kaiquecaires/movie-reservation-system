@@ -26,3 +26,4 @@ You can access the swagger docs by accessing the /docs route.
 - Create Seats
 - Create Show Time
 - Create Checkout
+- Get available seats for a show time
