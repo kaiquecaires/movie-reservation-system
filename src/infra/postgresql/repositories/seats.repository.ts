@@ -10,4 +10,19 @@ export class SeatsRepository {
     const response = await this.prisma.seat.createMany(data)
     return response
   }
+
+  async findAvailableSeats(showTimeId: number) {
+    const availableSeats = await this.prisma.seat.findMany({
+      where: {
+        isAvailable: true,
+        Reservation: {
+          none: {
+            showTimeId
+          }
+        }
+      }
+    })
+
+    return availableSeats
+  }
 }
